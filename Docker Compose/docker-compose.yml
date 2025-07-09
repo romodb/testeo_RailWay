@@ -1,0 +1,36 @@
+# Es la versión de la estructura que hemos creado:
+version: '3.8'
+#  Los servicios que tiene nuestra aplicación son:
+services:
+# Aquí está la configuración de SQL:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    ports: 
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: USER
+      MYSQLL_PASSWORD: 1234
+    volumes: 
+      - mysql_data:/var/lib/mysql
+  app:
+    build: .
+    container_name: mi_docker_compose
+    ports: 
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - .:/app/node_modules
+  # Ahora ponemos las dependencias:
+    depends_on: 
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_USER: user
+      DB_PASSWORD: 1234
+      DB_NAME: testdb
+volumes: 
+  mysql_data:

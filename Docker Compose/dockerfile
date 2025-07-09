@@ -1,0 +1,15 @@
+#  Imagen a usar, en nuestro caso la oficial de Node JS: 
+from node:latest
+# Carpeta de trabajo en el contenedor, normalmente se usa uno llamado app: 
+WORKDIR /app
+#  Copia los archivos de dependencias del package.json: 
+COPY package*.json ./
+# Instala las dependencias con npm: 
+RUN npm install
+# Cuando te den un proyecto SIEMPRE HAZ UN npm install para obtener TODAS las dependecias necesarias del proyecto. 
+# Copia el resto de archivos: 
+COPY . .
+# Indicamos el puerto en el que está el servicio: 
+EXPOSE 3000
+# Comando que arranca la app 
+CMD ["npm", "run", "dev"]
